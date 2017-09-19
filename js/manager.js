@@ -65,6 +65,10 @@ const DFPManager = Object.assign(new EventEmitter().setMaxListeners(0), {
     this.collapseEmptyDivs = collapse;
   },
 
+  setSingleRequestMode() {
+    this.singleRequestMode = true;
+  },
+
   load(slotId) {
     this.init();
     let availableSlots = {};
@@ -119,7 +123,9 @@ const DFPManager = Object.assign(new EventEmitter().setMaxListeners(0), {
       });
 
       googletag.cmd.push(() => {
-        // googletag.pubads().enableSingleRequest();
+        if (this.singleRequestMode === true) {
+          googletag.pubads().enableSingleRequest();
+        }
 
         if (this.collapseEmptyDivs === true || this.collapseEmptyDivs === false) {
           googletag.pubads().collapseEmptyDivs(this.collapseEmptyDivs);

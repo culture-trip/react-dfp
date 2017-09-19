@@ -15,6 +15,7 @@ export default class DFPSlotsProvider extends React.Component {
       PropTypes.bool,
       PropTypes.object,
     ]),
+    singleRequestMode: PropTypes.bool,
   };
 
   static childContextTypes = {
@@ -27,6 +28,7 @@ export default class DFPSlotsProvider extends React.Component {
   static defaultProps = {
     autoLoad: true,
     collapseEmptyDivs: null,
+    singleRequestMode: true,
   };
 
   getChildContext() {
@@ -41,12 +43,16 @@ export default class DFPSlotsProvider extends React.Component {
   componentDidMount() {
     DFPManager.setCollapseEmptyDivs(this.props.collapseEmptyDivs);
 
+    if (this.props.singleRequestMode) {
+      DFPManager.setSingleRequestMode();
+    }
+
     if (this.props.autoLoad) {
       DFPManager.load();
     }
   }
 
   render() {
-    return <div > {this.props.children} </div>;
+    return <div> {this.props.children} </div>;
   }
 }
